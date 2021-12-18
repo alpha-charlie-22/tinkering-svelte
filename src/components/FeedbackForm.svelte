@@ -3,9 +3,7 @@
     import Button from './Button.svelte'
     import Card from './Card.svelte'
     import RatingSelect from './RatingSelect.svelte';
-    import {createEventDispatcher} from 'svelte'
-
-    const dispatch = createEventDispatcher()
+    import { FeedbackStore } from "../stores";
 
     let text=''
     let btnDisabled = true
@@ -32,8 +30,9 @@
                 text,
                 rating: +rating
             }
-            dispatch('form-submit', newFeedback)
-
+            FeedbackStore.update((current) => {
+                return [newFeedback, ...current];
+            });
             text=''
         }
     }
